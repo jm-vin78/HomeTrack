@@ -1,6 +1,3 @@
-
 HomeTrack/.vs/
-
-HomeTrack/HomeTrack/bin/
-
-HomeTrack/HomeTrack/obj/
+**/bin/
+**/obj/
