@@ -1,5 +1,11 @@
-﻿@{
+﻿@model List<DAL.Entities.FlatEntity>
+
+@{
     ViewData["Title"] = "Home Page";
+}
+
+@foreach (var flat in Model) {
+    <div>ID: @flat.Id Number: @flat.Number</div>
 }
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

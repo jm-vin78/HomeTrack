@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -9,7 +6,7 @@ namespace DAL.Entities
     public class WaterReportEntity
     {
         [Column("id")]
-        public long PrimaryKey { get; set; }
+        public long Id { get; set; }
 
         [Column("flat_id")]
         public long FlatId { get; set; }

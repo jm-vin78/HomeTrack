@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DAL.Entities
 {
@@ -9,10 +9,10 @@ namespace DAL.Entities
     public class FlatEntity
     {
         [Column("id")]
-        public long Id;
+        public long Id { get; set; }
 
         [Column("number")]
-        public int Number;
+        public int Number { get; set; }
 
         public virtual ICollection<FlatUserEntity> FlatUsers { get; set; }
 

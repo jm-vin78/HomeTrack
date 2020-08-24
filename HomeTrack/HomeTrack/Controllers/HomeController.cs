@@ -5,14 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HomeTrack.Models;
+using DAL;
 
 namespace HomeTrack.Controllers
 {
     public class HomeController : Controller
     {
+        public AppDbContextFactory Factory { get; }
+
+        public HomeController(AppDbContextFactory factory)
+        {
+            Factory = factory;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            using (var context = Factory.CreateContext())
+            {
+                var flats = context.Flats
+                    .Where(x => x.Id % 2 == 0)
+                    .Where(x => x.Number == 2)
+                    .ToList();
+                return View(flats);
+            }
         }
 
         public IActionResult About()

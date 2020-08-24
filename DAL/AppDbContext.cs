@@ -16,6 +16,9 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FlatUserEntity>()
+                .HasKey(f => new { f.UserId, f.FlatId });
+
+            modelBuilder.Entity<FlatUserEntity>()
                 .HasOne(fe => fe.Flat)
                 .WithMany(f => f.FlatUsers)
                 .HasForeignKey(fe => fe.FlatId);
