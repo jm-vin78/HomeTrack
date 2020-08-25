@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using HomeTrack.Models;
-using DAL;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeTrack.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -15,7 +15,9 @@ namespace HomeTrack.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Пароль должен быть заполнен.")]
         public string Password { get; set; }
-        
+
+        public string ReturnUrl { get; set; }
+
         /// <summary>
         /// Check if user with given credentials exists
         /// </summary>

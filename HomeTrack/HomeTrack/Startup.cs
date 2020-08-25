@@ -31,6 +31,7 @@ namespace HomeTrack
                     opts.ExpireTimeSpan = TimeSpan.FromDays(1);
                     opts.LoginPath = "/auth/login";
                     opts.LogoutPath = "/auth/logout";
+                    opts.ReturnUrlParameter = "returnUrl";
                 });
 
             services.AddSession();

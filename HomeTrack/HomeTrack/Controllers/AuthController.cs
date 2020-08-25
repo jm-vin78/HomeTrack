@@ -3,6 +3,7 @@ using HomeTrack.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,13 +11,20 @@ namespace HomeTrack.Controllers
 {
     public class AuthController : Controller
     {
-        // Return page
-        public IActionResult Login()
+        /// <summary>
+        /// Return login page
+        /// </summary>
+        public IActionResult Login(string returnUrl)
         {
-            return View(new AuthModel());
+            if (HttpContext.User?.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
+
+            return View(new AuthModel { ReturnUrl = returnUrl });
         }
 
-        // Check if user is valid and log user in
+        /// <summary>
+        /// Check if user is valid and log user in
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Login([FromServices] AppDbContextFactory factory, AuthModel model)
         {
@@ -35,10 +43,15 @@ namespace HomeTrack.Controllers
                 await model.AuthAsync(HttpContext, user);
             }
 
+            if (!String.IsNullOrWhiteSpace(model.ReturnUrl) && model.ReturnUrl != "/")
+                return Redirect(model.ReturnUrl);
+
             return RedirectToAction("Index", "Home");
         }
 
-        // Log user out and redirect to login page
+        /// <summary>
+        /// Log user out and redirect to login page
+        /// </summary>
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

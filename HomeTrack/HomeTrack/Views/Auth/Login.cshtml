@@ -6,6 +6,7 @@
 
 <body class="text-center">
     <form class="form-signin" method="post" asp-controller="Auth" asp-action="Login">
+        <input type="hidden" asp-for="ReturnUrl"/>
         <h2 class="mb-3">Войти</h2>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Телефон" asp-for="Phone" />
