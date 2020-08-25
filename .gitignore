@@ -1,3 +1,5 @@
 HomeTrack/.vs/
 **/bin/
 **/obj/
+
+*.user
