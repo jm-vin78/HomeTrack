@@ -67,7 +67,7 @@ namespace HomeTrack
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Auth}/{action=Login}/{id?}");
             });
         }
     }

@@ -35,7 +35,7 @@ namespace HomeTrack.Controllers
                 await model.AuthAsync(HttpContext, user);
             }
 
-            return RedirectToAction("About", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // Log user out and redirect to login page
