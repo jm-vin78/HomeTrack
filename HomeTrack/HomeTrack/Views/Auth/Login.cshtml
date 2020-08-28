@@ -4,23 +4,21 @@
     ViewData["Title"] = "Login";
 }
 
-<body>
-    <form class="form-signin" method="post" asp-controller="Auth" asp-action="Login">
-        <input type="hidden" asp-for="ReturnUrl"/>
-        <h2 class="title">Войти</h2>
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Телефон" asp-for="Phone" />
-            <span asp-validation-for="Phone"></span>
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Пароль" asp-for="Password" />
-            <span asp-validation-for="Password"></span>
-        </div>
-        <div asp-validation-summary="All"></div>
-        <a class="float-left" asp-area="" asp-controller="Auth" asp-action="Register">Создать акканут</a>
-        <div class="float-right">
-            <button class="btn btn-primary" type="submit">Войти</button>
-        </div>
-    </form>
-</body>
+<form class="form-signin" method="post" asp-controller="Auth" asp-action="Login">
+    <input type="hidden" asp-for="ReturnUrl"/>
+    <h2 class="title">Войти</h2>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Телефон" asp-for="Phone" />
+        <span asp-validation-for="Phone"></span>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" placeholder="Пароль" asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <a class="float-left" asp-area="" asp-controller="Auth" asp-action="Register">Создать акканут</a>
+    <div class="float-right">
+        <button class="btn btn-primary" type="submit">Войти</button>
+    </div>
+</form>
 

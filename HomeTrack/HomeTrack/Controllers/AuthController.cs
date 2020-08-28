@@ -74,7 +74,7 @@ namespace HomeTrack.Controllers
         public async Task<IActionResult> Register([FromServices] AppDbContextFactory factory, RegisterModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return PartialView("RegisterFormContent", model);
 
             using (var context = factory.CreateContext())
             {
@@ -87,7 +87,7 @@ namespace HomeTrack.Controllers
                     ModelState.AddModelError("form", "Пользователь с таким электронным адресом уже зарегистрирован.");
 
                 if (!ModelState.IsValid)
-                    return View(model);
+                    return PartialView("RegisterFormContent", model);
 
                 var entity = new UserEntity();
                 entity.Name = model.Name;
@@ -98,8 +98,8 @@ namespace HomeTrack.Controllers
                 context.Users.Add(entity);
                 await context.SaveChangesAsync();
             }
-
-            return RedirectToAction("Login");
+            ViewBag.RedirectUrl = Url.Action("Login", "Auth");
+            return PartialView("RegisterFormContent");
         }
     }
 }
