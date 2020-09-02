@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -14,7 +15,7 @@ namespace DAL.Entities
         public virtual FlatEntity Flat { get; set; }
 
         [Column("date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [Column("cold_water")]
         public int ColdWater { get; set; }

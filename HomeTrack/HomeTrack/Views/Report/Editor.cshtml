@@ -1,0 +1,20 @@
+﻿@model EditModel
+@{ 
+    Layout = "_LayoutRestricted";
+}
+
+<form class="form-edit" method="post" asp-controller="Report" asp-action="Editor">
+    <input type="hidden" asp-for="ReportId" />
+    <input type="hidden" asp-for="FlatId" />
+    <div class="form-group">
+        <label asp-for="ColdWater"></label>
+        <input type="text" class="form-control" placeholder="@Model.ColdWater" asp-for="ColdWater" />
+        <span asp-validation-for="ColdWater"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HotWater"></label>
+        <input type="text" class="form-control" placeholder="@Model.HotWater" asp-for="HotWater" />
+        <span asp-validation-for="HotWater"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Отправить</button>
+</form>

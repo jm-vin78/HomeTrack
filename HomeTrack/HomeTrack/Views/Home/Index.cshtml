@@ -1,7 +1,39 @@
-﻿@{
+﻿@model ReportsModel
+@{
+    Layout = "_LayoutRestricted";
     ViewData["Title"] = "Home Page";
 }
 
-<h1>@ViewData["Title"]</h1>
-<p>Welcome to Home Track!</p>
+<h1>Добро пожаловать в HomeTrack!</h1>
 
+@section nav {
+    <span class="navbar-text ">Здравствуйте, @Model.UserName!</span>
+}
+
+<p>Квартира: @Model.FlatId</p>
+<p>Квартиры: 
+    @foreach (UserFlatModel uf in Model.UserFlats)
+    {
+        <p>@uf.FlatId</p>
+    }
+    </p>
+<a class="btn btn-primary mb-3" asp-controller="Report" asp-action="Editor" asp-route-flatId="@Model.FlatId">Добавить или обновить показания за текущий месяц</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Дата показаний</th>
+            <th scope="col">Холодная вода</th>
+            <th scope="col">Горячая вода</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ReportModel rm in Model.Reports)
+        {
+            <tr>
+                <td scope="row">@rm.Date</td>
+                <td scope="row">@rm.ColdWater</td>
+                <td scope="row">@rm.HotWater </td>
+            </tr>
+        }
+    </tbody>
+</table>
