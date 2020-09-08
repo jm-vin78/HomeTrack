@@ -35,3 +35,7 @@ body {
     padding: 15px;
     margin: auto;
 }
+
+#flatSelect {
+    width: 5rem;
+}

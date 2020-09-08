@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace HomeTrack.Models
 
         public List<ReportModel> Reports { get; } = new List<ReportModel>(0);
 
-        public List<UserFlatModel> UserFlats { get; } = new List<UserFlatModel>(0);
+        public List<SelectListItem> UserFlats { get; } = new List<SelectListItem>(0);
 
         public async Task LoadAsync(AppDbContext context, long userId, string userName, long? flatId = null)
         {
@@ -38,7 +39,11 @@ namespace HomeTrack.Models
 
             var userFlats = await context.FlatUsers
                 .Where(x => x.UserId == userId)
-                .Select(x => new UserFlatModel(x))
+                .Select(x => new SelectListItem {
+                    Value = x.FlatId.ToString(), 
+                    Text = x.Flat.Number.ToString(),
+                    Selected = x.FlatId == FlatId
+                    })
                 .ToListAsync();
 
             UserFlats.AddRange(userFlats);

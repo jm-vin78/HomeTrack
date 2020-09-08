@@ -4,20 +4,25 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script type="application/javascript">
+    function changeFlatFunction() {
+        var x = document.getElementById("flatSelect").value;
+        window.document.location = '@Url.Action("Index", "Home")?flatId=' + x;
+    }
+</script>
+
 <h1>Добро пожаловать в HomeTrack!</h1>
 
 @section nav {
     <span class="navbar-text ">Здравствуйте, @Model.UserName!</span>
 }
 
-<p>Квартира: @Model.FlatId</p>
-<p>Квартиры: 
-    @foreach (UserFlatModel uf in Model.UserFlats)
-    {
-        <p>@uf.FlatId</p>
-    }
-    </p>
-<a class="btn btn-primary mb-3" asp-controller="Report" asp-action="Editor" asp-route-flatId="@Model.FlatId">Добавить или обновить показания за текущий месяц</a>
+<p>Квартира: </p>
+<select class="custom-select mb-3" id="flatSelect" asp-items="Model.UserFlats" onchange="changeFlatFunction()">
+</select>
+<div>
+    <a class="btn btn-primary mb-3" asp-controller="Report" asp-action="Editor" asp-route-flatId="@Model.FlatId">Добавить или обновить показания за текущий месяц</a>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -27,10 +32,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (ReportModel rm in Model.Reports)
+        @foreach (ReportModel rm in Model.Reports.OrderByDescending(x => x.Date))
         {
             <tr>
-                <td scope="row">@rm.Date</td>
+                <td scope="row">@rm.Date.ToString("dd.MM.yyyy HH:mm")</td>
                 <td scope="row">@rm.ColdWater</td>
                 <td scope="row">@rm.HotWater </td>
             </tr>

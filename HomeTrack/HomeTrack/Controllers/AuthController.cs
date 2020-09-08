@@ -65,11 +65,17 @@ namespace HomeTrack.Controllers
             return RedirectToAction("Login");
         }
 
+        /// <summary>
+        /// Return registration page
+        /// </summary>
         public IActionResult Register()
         {
             return View(new RegisterModel());
         }
 
+        /// <summary>
+        /// Register user
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Register([FromServices] AppDbContextFactory factory, RegisterModel model)
         {

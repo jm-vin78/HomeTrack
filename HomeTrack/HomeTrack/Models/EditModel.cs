@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Entities;
+using DAL.Extensions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,8 +12,6 @@ namespace HomeTrack.Models
 {
     public class EditModel
     {
-        public long? ReportId { get; set; }
-
         public long FlatId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Показания холодной воды должны быть заполнены.")]
@@ -25,29 +24,29 @@ namespace HomeTrack.Models
 
         public void Validate(ModelStateDictionary modelState, WaterReportEntity entity)
         {
+            if (entity == null)
+            {
+                return;
+            }
+
             if (ColdWater < entity.ColdWater)
-                modelState.AddModelError(nameof(ColdWater), "Значение холодной воды должно быть больше, чем уже указанное.");
+                modelState.AddModelError(nameof(ColdWater), "Значение холодной воды должно быть больше либо равно указанному.");
   
             if (HotWater < entity.HotWater)
-                modelState.AddModelError(nameof(ColdWater), "Значение горячей воды должно быть больше, чем уже указанное.");
+                modelState.AddModelError(nameof(HotWater), "Значение горячей воды должно быть больше либо равно указанному.");
         }
 
+        /// <summary>
+        /// Try to get last report if it exists
+        /// </summary>
         public async Task TryLoadAsync(AppDbContext context, long flatId)
         {
             FlatId = flatId;
 
-            var now = DateTime.Now;
-            var monthStart = new DateTime(now.Year, now.Month, 1);
-            var monthEnd = monthStart.AddMonths(1);
-
-            var report = await context.WaterReports
-                .Where(x => x.Id == flatId)
-                .Where(x => (x.Date > monthStart) && (x.Date < monthEnd))
-                .FirstOrDefaultAsync();
+            var report = await context.WaterReports.GetLastFlatReport(FlatId);
 
             if (report != null)
             {
-                ReportId = report.Id;
                 ColdWater = report.ColdWater;
                 HotWater = report.HotWater;
             }
