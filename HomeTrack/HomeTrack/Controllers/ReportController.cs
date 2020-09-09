@@ -32,7 +32,7 @@ namespace HomeTrack.Controllers
         public async Task<IActionResult> Editor([FromServices] AppDbContextFactory factory, EditModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return PartialView("EditorFormContent", model);
 
             using (var context = factory.CreateContext())
             {
@@ -49,7 +49,7 @@ namespace HomeTrack.Controllers
                 {
                     model.Validate(ModelState, report);
                     if (!ModelState.IsValid)
-                        return View(model);
+                        return PartialView("EditorFormContent", model);
 
                     report.ColdWater = model.ColdWater;
                     report.HotWater = model.HotWater;
@@ -61,7 +61,7 @@ namespace HomeTrack.Controllers
                     var lastKnownReport = await context.WaterReports.GetLastFlatReport(model.FlatId);
                     model.Validate(ModelState, lastKnownReport);
                     if (!ModelState.IsValid)
-                        return View(model);
+                        return PartialView("EditorFormContent", model);
 
                     var entity = new WaterReportEntity();
                     entity.FlatId = model.FlatId;
@@ -74,7 +74,8 @@ namespace HomeTrack.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Home", new { flatId = model.FlatId });
+            ViewBag.RedirectUrl = Url.Action("Index", "Home", new { flatId = model.FlatId });
+            return PartialView("EditorFormContent", model);
         }
     }
 }
