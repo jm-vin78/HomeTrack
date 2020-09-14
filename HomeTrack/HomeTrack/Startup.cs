@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 
 namespace HomeTrack
@@ -33,6 +37,50 @@ namespace HomeTrack
                     opts.LogoutPath = "/auth/logout";
                     opts.ReturnUrlParameter = "returnUrl";
                 });
+
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+
+            services.Configure<RequestLocalizationOptions>(
+                opts =>
+                {
+                    var list = new List<CultureInfo>(0);
+                    list.Add(new CultureInfo("ru"));
+                    list.Add(new CultureInfo("en"));
+
+                    opts.DefaultRequestCulture = new RequestCulture("ru");
+                    opts.SupportedCultures = list;
+                    opts.SupportedUICultures = list;
+                });
+
+            var mvcBuilder = services
+                .AddMvc(options =>
+                {
+                    var stringLocalizerFactory = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    var localizer = stringLocalizerFactory.Create("ModelBinder", "HomeTrack");
+                    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => 
+                    localizer["ModelBinder_AttemptedValueIsInvalidAccessor", x, y]);
+                    options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => 
+                    localizer["ModelBinder_MissingBindRequiredValueAccessor", x]);
+                    options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => 
+                    localizer["ModelBinder_MissingKeyOrValueAccessor"]);
+                    options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => 
+                    localizer["ModelBinder_MissingRequestBodyRequiredValueAccessor"]);
+                    options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => 
+                    localizer["ModelBinder_NonPropertyAttemptedValueIsInvalidAccessor", x]);
+                    options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => 
+                    localizer["ModelBinder_NonPropertyUnknownValueIsInvalidAccessor"]);
+                    options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => 
+                    localizer["ModelBindder_NonPropertyValueMustBeANumberAccessor"]);
+                    options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => 
+                    localizer["ModelBinder_UnknownValueIsInvalidAccessor", x]);
+                    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => 
+                    localizer["ModelBinder_ValueIsInvalidAccessor", x]);
+                    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => 
+                    localizer["ModelBinder_ValueMustBeANumberAccessor", x]);
+                    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => 
+                    localizer["ModelBinder_ValueMustNotBeNullAccessor", x]);
+                }
+                );
 
             services.AddSession();
 
