@@ -10,10 +10,10 @@ namespace HomeTrack.Models
 {
     public class AuthModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Телефон должен быть заполнен.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "AuthModel_PhoneRequired")]
         public string Phone { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Пароль должен быть заполнен.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "AuthModel_PasswordRequired")]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }

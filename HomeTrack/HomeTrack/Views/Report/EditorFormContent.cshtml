@@ -1,15 +1,18 @@
-﻿@model EditModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@model EditModel
+@inject IViewLocalizer Localizer
 
 <input type="hidden" asp-for="FlatId" />
 <div class="form-group">
-    <label asp-for="ColdWater"></label>
+    <label asp-for="ColdWater"></label>:
     <input type="text" class="form-control" placeholder="@Model.ColdWater" asp-for="ColdWater" />
     <span asp-validation-for="ColdWater"></span>
 </div>
 <div class="form-group">
-    <label asp-for="HotWater"></label>
+    <label asp-for="HotWater"></label>:
     <input type="text" class="form-control" placeholder="@Model.HotWater" asp-for="HotWater" />
     <span asp-validation-for="HotWater"></span>
 </div>
-<button class="btn btn-primary" type="submit">Отправить</button>
+<button class="btn btn-primary" type="submit">@Localizer["EditorFormContent_Submit"]</button>
 <div id="redirectUrl" data-redirect-url="@ViewBag.RedirectUrl"/>

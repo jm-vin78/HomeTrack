@@ -1,4 +1,5 @@
 ﻿using DAL;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -6,26 +7,26 @@ namespace HomeTrack.Models
 {
     public class RegisterModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Имя должно быть заполнено.")]
-        [Display(Name="Ваше имя *")]
-        [RegularExpression(@"^[a-zA-Z]+|[а-яА-ЯёЁ]+$", ErrorMessage ="Разрешено использовать только буквы.")]
-        [MaxLength(256, ErrorMessage = "Длина значения не может превышать 256 символов.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "RegisterModel_NameRequired")]
+        [DisplayName("RegisterModel_Name")]
+        [RegularExpression(@"^[a-zA-Z]+|[а-яА-ЯёЁ]+$", ErrorMessage = "RegisterModel_NameOnlyLetters")]
+        [MaxLength(256, ErrorMessage = "RegisterModel_NameLength")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Телефон должен быть заполнен.")]
-        [Display(Name="Ваш телефон (без +7) *")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Разрешены только цифры.")]
-        [StringLength(10, MinimumLength=10, ErrorMessage = "Длина значения должна составлять 10 символов.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "RegisterModel_PhoneRequired")]
+        [DisplayName("RegisterModel_Phone")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "RegisterModel_PhoneOnlyNumbers")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "RegisterModel_PhoneLength")]
         public string Phone { get; set; }
 
-        [Display(Name="Адрес электронной почты")]
-        [EmailAddress(ErrorMessage = "Адрес электронной почты неверный.")]
-        [MaxLength(320, ErrorMessage = "Длина значения адреса электронной почты не должен превышать 320 символов.")]
+        [DisplayName("RegisterModel_Email")]
+        [EmailAddress(ErrorMessage = "RegisterModel_EmailNotValid")]
+        [MaxLength(320, ErrorMessage = "RegisterModel_EmailLength")]
         public string Email { get; set; }
         
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Необходимо ввести пароль.")]
-        [Display(Name="Пароль *")]
-        [MaxLength(20, ErrorMessage = "Длина пароля не должна превышать 20 символов.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "RegisterModel_PasswordRequired")]
+        [DisplayName("RegisterModel_Password")]
+        [MaxLength(20, ErrorMessage = "RegisterModel_PasswordLength")]
         public string Password { get; set; }
 
         public bool CheckPhone(AppDbContext context)

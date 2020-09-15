@@ -1,6 +1,9 @@
-﻿@model RegisterModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 
-<h2 class="title">Регистрация</h2>
+@model RegisterModel
+@inject IViewLocalizer Localizer
+
+<h2 class="title">@Localizer["RegisterFormContent_Title"]</h2>
 <div class="form-group">
     <label asp-for="Name"></label>
     <input type="text" class="form-control" asp-for="Name" />
@@ -22,5 +25,5 @@
     <span asp-validation-for="Password"></span>
 </div>
 <div asp-validation-summary="All"></div>
-<button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+<button class="btn btn-primary" type="submit">@Localizer["RegisterFormContent_Register"]</button>
 <div id="redirectUrl" data-redirect-url="@ViewBag.RedirectUrl" />

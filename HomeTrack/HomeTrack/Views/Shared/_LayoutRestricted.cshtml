@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
     Layout = "_Layout";
 }
 
@@ -12,7 +16,8 @@
         </ul>
         @RenderSection("nav", required: false)
     </div>
-    <a class="btn btn-primary ml-3" asp-area="" asp-controller="Auth" asp-action="Logout">Выйти</a>
+    <a class="btn btn-primary ml-3" asp-area="" asp-controller="Auth" 
+       asp-action="Logout">@Localizer["_LayoutRestricted_Logout"]</a>
 }
 
 @RenderBody()

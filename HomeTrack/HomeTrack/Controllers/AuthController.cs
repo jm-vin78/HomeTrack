@@ -5,6 +5,7 @@ using HomeTrack.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,11 @@ namespace HomeTrack.Controllers
 {
     public class AuthController : Controller
     {
+        private readonly IStringLocalizer _localizer;
+        public AuthController(IStringLocalizer<AuthController> localizer)
+        {
+            _localizer = localizer;
+        }
         /// <summary>
         /// Return login page
         /// </summary>
@@ -38,7 +44,7 @@ namespace HomeTrack.Controllers
                 var IsUserValid = model.CheckUser(context, out var user);
 
                 if (!IsUserValid)
-                    ModelState.AddModelError("form", "Неправильный логин и/или пароль.");
+                    ModelState.AddModelError("form", _localizer["AuthController_LoginOrPasswordNotValid"]);
 
                 if (!ModelState.IsValid)
                     return View(model);
@@ -86,11 +92,11 @@ namespace HomeTrack.Controllers
             {
                 var phoneExists = model.CheckPhone(context);
                 if (phoneExists)
-                    ModelState.AddModelError("form", "Пользователь с таким номером телефона уже зарегистрирован.");
+                    ModelState.AddModelError("form", _localizer["AuthController_UserWithPhoneExists"]);
 
                 var emailExists = model.CheckEmail(context);
                 if (emailExists)
-                    ModelState.AddModelError("form", "Пользователь с таким электронным адресом уже зарегистрирован.");
+                    ModelState.AddModelError("form", _localizer["AuthController_UserWithEmailExists"]);
 
                 if (!ModelState.IsValid)
                     return PartialView("RegisterFormContent", model);

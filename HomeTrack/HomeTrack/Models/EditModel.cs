@@ -2,10 +2,8 @@
 using DAL.Entities;
 using DAL.Extensions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
-using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeTrack.Models
@@ -14,12 +12,12 @@ namespace HomeTrack.Models
     {
         public long FlatId { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Показания холодной воды должны быть заполнены.")]
-        [Display(Name = "Холодная вода:")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "EditModel_ColdWaterRequired")]
+        [DisplayName("EditModel_ColdWater")]
         public int ColdWater { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Показания горячей воды должны быть заполнены.")]
-        [Display(Name = "Горячая вода:")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "EditModel_HotWaterRequired")]
+        [DisplayName("EditModel_HotWater")]
         public int HotWater { get; set; }
 
         public void Validate(ModelStateDictionary modelState, WaterReportEntity entity)
@@ -30,10 +28,10 @@ namespace HomeTrack.Models
             }
 
             if (ColdWater < entity.ColdWater)
-                modelState.AddModelError(nameof(ColdWater), "Значение холодной воды должно быть больше либо равно указанному.");
+                modelState.AddModelError(nameof(ColdWater), Resources.Models.EditModel.EditModel_ColdWaterCondition);
   
             if (HotWater < entity.HotWater)
-                modelState.AddModelError(nameof(HotWater), "Значение горячей воды должно быть больше либо равно указанному.");
+                modelState.AddModelError(nameof(HotWater), Resources.Models.EditModel.EditModel_HotWaterCondition);
         }
 
         /// <summary>

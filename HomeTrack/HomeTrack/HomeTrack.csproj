@@ -15,4 +15,22 @@
     <ProjectReference Include="..\..\DAL\DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\Models\EditModel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditModel.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Models\EditModel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\RegisterModel.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

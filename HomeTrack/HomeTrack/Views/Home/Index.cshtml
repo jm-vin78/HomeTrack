@@ -1,4 +1,8 @@
-﻿@model ReportsModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@model ReportsModel
+@inject IViewLocalizer Localizer
+
 @{
     Layout = "_LayoutRestricted";
     ViewData["Title"] = "Home Page";
@@ -11,24 +15,26 @@
     }
 </script>
 
-<h1>Добро пожаловать в HomeTrack!</h1>
+<h1>@Localizer["Index_Greet"]</h1>
 
 @section nav {
-    <span class="navbar-text ">Здравствуйте, @Model.UserName!</span>
+    <span class="navbar-text ">@Localizer["Index_Hello", Model.UserName]</span>
 }
 
-<p>Квартира: </p>
+<p>@Localizer["Index_Flat"]:</p>
 <select class="custom-select mb-3" id="flatSelect" asp-items="Model.UserFlats" onchange="changeFlatFunction()">
 </select>
 <div>
-    <a class="btn btn-primary mb-3" asp-controller="Report" asp-action="Editor" asp-route-flatId="@Model.FlatId">Добавить или обновить показания за текущий месяц</a>
+    <a class="btn btn-primary mb-3" asp-controller="Report" asp-action="Editor" asp-route-flatId="@Model.FlatId">
+        @Localizer["Index_Edit"]
+    </a>
 </div>
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Дата показаний</th>
-            <th scope="col">Холодная вода</th>
-            <th scope="col">Горячая вода</th>
+            <th scope="col">@Localizer["Index_Date"]</th>
+            <th scope="col">@Localizer["Index_Cold"]</th>
+            <th scope="col">@Localizer["Index_Hot"]</th>
         </tr>
     </thead>
     <tbody>
