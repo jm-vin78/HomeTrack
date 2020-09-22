@@ -1,0 +1,2 @@
+DatabaseConfiguration:
+  ConnectionString: "Server=;Port=;Database=;User Id=;Password=;"

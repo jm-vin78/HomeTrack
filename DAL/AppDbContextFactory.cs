@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL
 {
@@ -9,10 +6,10 @@ namespace DAL
     {
         private readonly DbContextOptions<AppDbContext> _options;
 
-        public AppDbContextFactory()
+        public AppDbContextFactory(DatabaseConfiguration configuration)
         {
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql("Server=;Port=5432;Database=;User Id=;Password=;");
+            builder.UseNpgsql(configuration.ConnectionString);
 
             _options = builder.Options;
         }
